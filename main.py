@@ -18,7 +18,7 @@ def getMonday():
         y = x - timedelta(days = int(x.strftime("%w")) - 1)
     return y
 
-def calendarPosition(time):
+def calendarPositionTime(time):
     if time['hours'] == 8 and time['minutes'] == 0:
         return 0
     elif time['hours'] == 9 and time['minutes'] == 50:
@@ -29,6 +29,9 @@ def calendarPosition(time):
         return 4
     else:
         return 5
+
+def calendarPositionDate(date):
+    return int(datetime(date['year'], date['month'], date['day']).strftime("%w"))-1
 
 def CompareFF(a, b):
     return lambda item: a(item) and b(item)
@@ -50,12 +53,12 @@ def separateData(item):
         less['topic'] = ''
     return less
 
-def displayItem(item, col, subRow, name1, name2, name3, name4, color='#FF0000'):
+def displayItem(item, col, subRow, name1, name2, name3, name4, color='#FF0000', rowNumber=4, widt=230):
     smallRowHeight = 25
-    bigRowHeight = 100
-    colWidth = 230
-    leftUpperX = (col) * colWidth + 50
-    leftUpperY = smallRowHeight + smallRowHeight + subRow * bigRowHeight
+    bigRowHeight = rowNumber * 25
+    colWidth = widt
+    leftUpperX = (col) * (colWidth + 2) + 80
+    leftUpperY = smallRowHeight + smallRowHeight + subRow * (bigRowHeight + 2)
     rectangle1 = f'<rect x="{leftUpperX}" y="{leftUpperY}" width="{colWidth}" height="{bigRowHeight}" stroke="#000000" stroke-width="1.33333" stroke-miterlimit="8"/>'
     rectangle2 = (f'<rect x="{leftUpperX}" y="{leftUpperY}" width="{colWidth}" height="{bigRowHeight}" stroke="{color}" stroke-width="1.33333" stroke-miterlimit="8" fill="{color}">'
         #+ '<animate attributeName="rx" values="0;15;0" dur="10s" repeatCount="indefinite" />'
@@ -103,16 +106,19 @@ async def resultGet():
     SVGFooter = '</svg>'
 
     data = (SVGHeader + '<g>')
-    data = data + displayItem({'sbj': '8:00', 'top': '', 'tch': '', 'clsr': ''}, 0, 0, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF') 
-    data = data + displayItem({'sbj': '9:50', 'top': '', 'tch': '', 'clsr': ''}, 1, 0, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF') 
-    data = data + displayItem({'sbj': '11:40', 'top': '', 'tch': '', 'clsr': ''}, 2, 0, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF')
-    data = data + displayItem({'sbj': '', 'top': '', 'tch': '', 'clsr': ''}, 3, 0, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF')
-    data = data + displayItem({'sbj': '14:30', 'top': '', 'tch': '', 'clsr': ''}, 4, 0, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF')
+    data = data + displayItem({'sbj': '8:00', 'top': '', 'tch': '', 'clsr': ''}, 0, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1) 
+    data = data + displayItem({'sbj': '9:50', 'top': '', 'tch': '', 'clsr': ''}, 1, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1) 
+    data = data + displayItem({'sbj': '11:40', 'top': '', 'tch': '', 'clsr': ''}, 2, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1)
+    data = data + displayItem({'sbj': '', 'top': '', 'tch': '', 'clsr': ''}, 3, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1)
+    data = data + displayItem({'sbj': '14:30', 'top': '', 'tch': '', 'clsr': ''}, 4, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1)
+    
     for index, item in enumerate(lessons):
         data = data + displayItem({
-            'sbj': item['subjectName'], 'top': item['topic'][:34], 'tch': item['teachersNames'][0],
-            'clsr': item['classroomsNames'][0]}, calendarPosition(item['startTime']),
-            int(datetime(item['date']['year'], item['date']['month'], item['date']['day']).strftime("%w")),
+            'sbj': str(item['date']['day']) + '.' + str(item['date']['month']) + '.', 'top': '', 'tch': '', 'clsr': ''},
+            -1, calendarPositionDate(item['date']), 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',4,60)
+        data = data + displayItem({
+            'sbj': item['subjectName'], 'top': item['topic'][:34], 'tch': item['teachersNames'][0],'clsr': item['classroomsNames'][0]},
+            calendarPositionTime(item['startTime']), calendarPositionDate(item['date']),
             'sbj', 'top', 'tch', 'clsr', '#00FFFF')
     data = data + ('</g>' + SVGFooter)
 
