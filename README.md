@@ -28,6 +28,6 @@ Definice frontend komponenet (S,M,L), studijní program, předmět, lekce, učeb
 
 Problémy:
 - odkazovatelnost jednotlivých komponent
-- iterakce s API
+- interakce s API
 
 
