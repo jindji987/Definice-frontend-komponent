@@ -1,4 +1,5 @@
-# Definice-frontend-komponent
+Definice-frontend-komponent
+
 Definice frontend komponenet (S,M,L), studijní program, předmět, lekce, učebna, areál v React, vizualizace na základě props (S, M), na základě interakce s API (M, L)
 
 Časový harmonogram:
@@ -11,11 +12,11 @@ Definice frontend komponenet (S,M,L), studijní program, předmět, lekce, učeb
 
 20.11.2021 Dokončení komponent v Reactu (učitel, učebna, atd)
 
-14.12.2021 Propojení zobrazování rozvrhů s komponenty v Reactu
+14.12.2021 Propojení zobrazování rozvrhů s komponenty v Reactu a interakce s API
 
 15.12.2021 Vydání verze Alfa
 
-14.1.2022 Převedení projektu do dockeru
+14.1.2022 Optimalizace a dokončení kódu a následné převedení projektu do dockeru
 
 15.1.2022 Vydání verze Beta
 
@@ -24,4 +25,10 @@ Definice frontend komponenet (S,M,L), studijní program, předmět, lekce, učeb
 31.1.2022 uzavření projektu,
 
 18.3.2022 konec zkouškového období.
+
+Problémy:
+
+    odkazovatelnost jednotlivých komponent
+    interakce s API
+
 
