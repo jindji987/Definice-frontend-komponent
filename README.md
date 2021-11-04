@@ -3,13 +3,21 @@ Definice frontend komponenet (S,M,L), studijní program, předmět, lekce, učeb
 
 Časový harmonogram:
 
-1.11.2021 zveřejnění harmonogramu prací na projektu,
+4.11.2021 zveřejnění harmonogramu prací na projektu,
 
-1.11.2021 zveřejnění identifikovaných nejsložitějších problémů v projektu,
+4.11.2021 zveřejnění identifikovaných nejsložitějších problémů v projektu,
 
-15.12.2021 verze Alfa,
+14.11.2021 Dokončení zobrazování rozvrhů v SVG
 
-15.1.2022 verze Beta,
+20.11.2021 Dokončení komponent v Reactu (učitel, učebna, atd)
+
+14.12.2021 Propojení zobrazování rozvrhů s komponenty v Reactu
+
+15.12.2021 Vydání verze Alfa
+
+14.1.2022 Převedení projektu do dockeru
+
+15.1.2022 Vydání verze Beta
 
 24.1.2021 počátek zkouškového období,
 
