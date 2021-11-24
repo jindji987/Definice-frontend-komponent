@@ -10,7 +10,7 @@ Definice frontend komponent (S,M,L), studijní program, předmět, lekce, učebn
 
 14.11.2021 Dokončení zobrazování rozvrhů v SVG
 
-20.11.2021 Dokončení komponent v Reactu (učitel, učebna, atd)
+5.12.2021 Dokončení zobrazování rozvrhů učeben v reactu
 
 14.12.2021 Propojení zobrazování rozvrhů s komponenty v Reactu a interakce s API
 
