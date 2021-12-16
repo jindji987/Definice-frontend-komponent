@@ -1,6 +1,6 @@
 Definice-frontend-komponent
 
-Definice frontend komponent (S,M,L), studijní program, předmět, lekce, učebna, areál v React, vizualizace na základě props (S, M), na základě interakce s API (M, L)
+Definice frontend komponent (S, M, L), Můj rozvrh, Rozvrh skupiny, Rozvrh učebny v React, vizualizace na základě props (S, M), na základě interakce s API (M, L)
 
 Časový harmonogram:
 
@@ -10,7 +10,7 @@ Definice frontend komponent (S,M,L), studijní program, předmět, lekce, učebn
 
 14.11.2021 Dokončení zobrazování rozvrhů v SVG
 
-20.11.2021 Dokončení komponent v Reactu (učitel, učebna, atd)
+5.12.2021 Dokončení zobrazování rozvrhů učeben v Reactu
 
 14.12.2021 Propojení zobrazování rozvrhů s komponenty v Reactu a interakce s API
 
