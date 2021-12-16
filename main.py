@@ -65,7 +65,7 @@ def separateData(item):
         less['topic'] = ''
     return less
 
-def displayItem(item, col, subRow, name1, name2, name3, name4, color, rowNumber=4, widt=220, argumentDate = datetime(2021, 11, 7)):
+def displayItem(item, col, subRow, name1, name2, name3, name4, color, rowNumber=4, widt=220, link1 = "", link2 = "", link3 = "", link4 = ""):
     smallRowHeight = 25
     bigRowHeight = rowNumber * 25
     colWidth = widt
@@ -81,10 +81,10 @@ def displayItem(item, col, subRow, name1, name2, name3, name4, color, rowNumber=
         + '</rect>')
     
     text = f'''<text font-family="Calibri,Calibri_MSFontService,sans-serif" font-weight="600" font-size="18" transform="translate({5+leftUpperX} {20+leftUpperY})">
-<a href="/svg/?start={argumentDate}">{item[name1]}</a>
-<tspan font-size="15" font-weight="400" x="-0.0424118" y="23"><a xlink:href="/ui/" target="_blank">{item[name2]}</a></tspan>
-<tspan font-size="15" font-weight="400" x="1.04089" y="45"><a xlink:href="/ui/" target="_blank">{item[name3]}</a></tspan>
-<tspan font-size="15" font-weight="400" x="1.04089" y="70"><a xlink:href="/ui/" target="_blank">{item[name4]}</a></tspan></text>'''
+<a href="{link1}">{item[name1]}</a>
+<tspan font-size="15" font-weight="400" x="-0.0424118" y="23"><a xlink:href="{link2}" target="_blank">{item[name2]}</a></tspan>
+<tspan font-size="15" font-weight="400" x="1.04089" y="45"><a xlink:href="{link3}" target="_blank">{item[name3]}</a></tspan>
+<tspan font-size="15" font-weight="400" x="1.04089" y="70"><a xlink:href="{link4}" target="_blank">{item[name4]}</a></tspan></text>'''
     return rectangle1 + rectangle2 + text
 
 
@@ -107,9 +107,10 @@ async def resultGet(start: Optional[datetime] = None):
         startDate = getMonday()
         startDate = startDate - timedelta(days = 1)
     endDate = startDate + timedelta(days = 6)
-    group = '23-5KB'
+    filteringGroup = 'groupsNames'
+    filteringText = '23-5KB'
 
-    filterFunc1 = lambda item: group in item['groupsNames']
+    filterFunc1 = lambda item: filteringText in item[filteringGroup]
     filterFunc2 = lambda item: datetime(item['date']['year'], item['date']['month'], item['date']['day']) >= startDate and datetime(item['date']['year'], item['date']['month'], item['date']['day']) <= endDate
     filteredEvents = filter(CompareFF(filterFunc1,filterFunc2), events)
 
@@ -128,9 +129,11 @@ async def resultGet(start: Optional[datetime] = None):
     data = data + displayItem({'sbj': '14:30', 'top': '', 'tch': '', 'clsr': ''}, 4, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1)
     data = data + displayItem({'sbj': '16:20', 'top': '', 'tch': '', 'clsr': ''}, 5, -1, 'sbj', 'top', 'tch', 'clsr', '#FFFFFF',1)
 
-    data = data + displayItem({'sbj': group, 'top': '', 'tch': '', 'clsr': ''}, 2, 20, 'sbj', 'top', 'tch', 'clsr', '#00BBFF',1)
-    data = data + displayItem({'sbj': 'Předchozí týden', 'top': '', 'tch': '', 'clsr': ''}, 1, 20, 'sbj', 'top', 'tch', 'clsr', '#00DFFF',1,220,startDate - timedelta(days = 7))
-    data = data + displayItem({'sbj': 'Příští týden', 'top': '', 'tch': '', 'clsr': ''}, 3, 20, 'sbj', 'top', 'tch', 'clsr', '#00DFFF',1,220,startDate + timedelta(days = 7))
+    data = data + displayItem({'sbj': filteringText, 'top': '', 'tch': '', 'clsr': ''}, 2, 20, 'sbj', 'top', 'tch', 'clsr', '#00BBFF',1)
+    data = data + displayItem({'sbj': 'Předchozí týden', 'top': '', 'tch': '', 'clsr': ''}, 1, 20, 'sbj', 'top', 'tch', 'clsr', '#00DFFF',
+    1,220,"/svg/?start=" + str(startDate - timedelta(days = 7)))
+    data = data + displayItem({'sbj': 'Příští týden', 'top': '', 'tch': '', 'clsr': ''}, 3, 20, 'sbj', 'top', 'tch', 'clsr', '#00DFFF',
+    1,220,"/svg/?start=" + str(startDate + timedelta(days = 7)))
     
     datumForName = startDate
     dayList = ['Po', 'Út', 'St', 'Čt', 'Pá']
@@ -145,7 +148,7 @@ async def resultGet(start: Optional[datetime] = None):
         data = data + displayItem({
             'sbj': item['subjectName'][:27], 'top': item['topic'][:34], 'tch': item['teachersNames'][0],'clsr': item['classroomsNames'][0]},
             calendarPositionTime(item['startTime']), calendarPositionDate(item['date']),
-            'sbj', 'top', 'tch', 'clsr', '')
+            'sbj', 'top', 'tch', 'clsr', '', 4, 220, "","","/teacher/?id="+str(item['teachersIds'][0]),"")
     data = data + ('</g>' + SVGFooter)
 
     return Response(content=data, media_type="image/svg+xml")
