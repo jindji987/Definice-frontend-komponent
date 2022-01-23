@@ -20,6 +20,24 @@ def getMonday():
         y = x - timedelta(days = int(x.strftime("%w")) - 1)
     return y
 
+def getSemestrStart(time):
+    if(time >= datetime(time.year, 3, 7) and time < datetime(time.year, 9, 1)):
+        return datetime(time.year, 3, 8)
+    else:
+        if(time >= datetime(time.year, 9, 1)):
+            return datetime(time.year, 9, 1)
+        else:
+            return datetime(time.year-1, 9, 1)
+
+def getSemestrEnd(time):
+    if(time >= datetime(time.year, 3, 7) and time < datetime(time.year, 9, 1)):
+        return datetime(time.year, 8, 31)
+    else:
+        if(time >= datetime(time.year, 9, 1)):
+            return datetime(time.year+1, 3, 7)
+        else:
+            return datetime(time.year, 3, 7)
+        
 def calendarPositionTime(time):
     hours = time['hours']
     minutes = time['minutes']
@@ -226,14 +244,15 @@ async def resultGet(type: str, filterID: int, start: Optional[datetime] = None):
 
 
 @app.get('/svgs/')
-async def resultGet(start: Optional[datetime] = None):
-    if start != None:
-        startDate = start
-    else:
-        startDate = datetime(2021, 9, 1)
-        startDate = startDate - timedelta(days = 1)
-    endDate = datetime(2022, 3, 7)
-    filteringGroup = 'groupsNames'
+async def resultGet(filterID: int, start: Optional[datetime] = None):
+    if start == None:
+        start = datetime.now()
+
+    startDate = getSemestrStart(start)
+    startDate = startDate - timedelta(days = 1)
+    endDate = getSemestrEnd(start)
+
+    filteringGroup = 'groupsNames'                  #pak upravit na ID a filterID
     filteringText = '23-5KB'
 
     filterFunc1 = lambda item: filteringText in item[filteringGroup]
